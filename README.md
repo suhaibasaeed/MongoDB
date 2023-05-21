@@ -110,6 +110,55 @@
   * **Example Case B:** A contact information management application that can store multiple addresses per user. The application would store important details for the person such as their name, as well as their associated addresses. - **Embedded document unless we have repitition - one-to-many**
   * **Example Case C:** A school registration application that manages multiple students. Each student can be in multiple classes. Each class record can easily identify which students are registered and each student record can quickly find any associated classes. **References - many-to-many**
 
+### CRUD I: FINDING DOCUMENTS
+#### Browsing & Selecting Collections
+* We can have multiple DBs on single MongoDB instance
+  * E.g. one for ecommerce shop, one for blog app etc.
+* `show dbs` command will print a list of all DBs in MongoDB instance
+```
+test> show dbs
+admin        40.00 KiB
+config       72.00 KiB # Internal use - We usually don't manually put data in here
+local        80.00 KiB # Stores data used in replication process and instance specific-data
+restaurants  44.00 KiB
+```
+* To choose a DB to work utilise the `use` command
+```
+test> use restaurants
+switched to db restaurants
+restaurants>
+```
+#### Introduction to Querying
+* We can use the `.find()` method on a specific collection
+  * Cursor returned
+    * An object that points to matched documents
+  * We are returned results in **batches**
+    * Use `it` keyword to see next batch
+      * Stands for iterate
+  * E.g.
+```
+restaurants> db.listingsAndReviews.find()
+[
+  {
+    _id: ObjectId("5eb3d668b31de5d588f43081"),
+    address: {
+      building: '543',
+      coord: [ -73.9922175, 40.7543506 ],
+      street: '8 Avenue',
+      zipcode: '10018'
+    },
+    borough: 'Manhattan',
+    cuisine: 'American',
+    grades: [
+      {
+        date: ISODate("2014-12-29T00:00:00.000Z"),
+        grade: 'A',
+        score: 7
+      },
+...
+```
+#### Querying Collections
+
 ### Operations
 * **Comparison operators on Array fields**
   * `.find()` method can query a collection with comparison operators
@@ -125,13 +174,20 @@ db.ufc_contestants.find({
 ```
 db.restaurants.find( { grade: "A" }, { name: 1, location: 1 } )
 ```
-* Connection to DB
-  * We can navigate to a VB via mongo shell
+* **Connection to DB**
+  * We can navigate to a DB via mongo shell using `mongosh` command
   * In e.g. below we select existing DB called dailychecks
     * `use dailychecks`
-* Sort method
+  
+* **Sort method**
   * `.sort()` method can be appended to queries to order documents
     * 1 used for ascending order
     * -1 for descending order
+    * Won't work for fields with duplicate values across documents
+    * E.g. below views list of documents in `documentaries` collection sorted in descending order on `release_year` field
+```
+db.documentaries.find().sort({ release_year: -1 })
+```
+
   
 
