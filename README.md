@@ -34,7 +34,7 @@
     * Storage wise also not efficient
     * Supports limited data types i.e. dates not supported
 * BSON - MongoDBs Storage Format
-  * Stands for Binary Javascrtipt Object Notation
+  * Stands for Binary Javascript Object Notation
   * Differences to JSON
     * Not human-readable
     * More efficient storage wise
@@ -109,3 +109,29 @@
   * **Example Case A:** A time management application that stores one user per task. We want to store details about the task, such as the task name, the task due date, and the user assigned to the task (and their associated details). There can only be one person assigned to each task. - **Embedded Document - one-to-one**
   * **Example Case B:** A contact information management application that can store multiple addresses per user. The application would store important details for the person such as their name, as well as their associated addresses. - **Embedded document unless we have repitition - one-to-many**
   * **Example Case C:** A school registration application that manages multiple students. Each student can be in multiple classes. Each class record can easily identify which students are registered and each student record can quickly find any associated classes. **References - many-to-many**
+
+### Operations
+* **Comparison operators on Array fields**
+  * `.find()` method can query a collection with comparison operators
+  * E.g. below finds document in `ufc_contestants` collections where array field: 2008 > `championship_years` > 2004
+```
+db.ufc_contestants.find({
+  championship_years: { $gt: 2004, $lt: 2008 }
+})
+```
+* **Query projections with .find()**
+  * It's possible to limit amount of data returned or return only data that has specific field
+    * E.g. below only returns name and location field of documents in restaurants collection with `grade` field
+```
+db.restaurants.find( { grade: "A" }, { name: 1, location: 1 } )
+```
+* Connection to DB
+  * We can navigate to a VB via mongo shell
+  * In e.g. below we select existing DB called dailychecks
+    * `use dailychecks`
+* Sort method
+  * `.sort()` method can be appended to queries to order documents
+    * 1 used for ascending order
+    * -1 for descending order
+  
+
