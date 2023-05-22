@@ -325,9 +325,82 @@ Example: `db.records.find().sort({ "release_year": 1 });`
 …
 ```
 
+#### Query Projections
+* Allows us to return **specfic fields** instead of entire document
+  * As we may only need some things
+  * Done by passing **second argument** to `.find()` method
+  * We give fields a value of 1 or 0
+    * 1 means include it
+    * 0 means execlude it
+* Syntax:
+```
+db.<collection>.find(
+  <query>, 
+  { 
+    <projection_field_1>: <0 or 1>, 
+    <projection_field_2>: <0 or 1>,
+    …
+  }
+)
+```
+* Example:
+```
+{
+  _id: ObjectId("5eb3d668b31de5d588f4292a"),
+  address: {
+    building: '2780',
+    coord: [ -73.98241999999999, 40.579505 ],
+    street: 'Stillwell Avenue',
+    zipcode: '11224'
+  },
+  borough: 'Brooklyn',
+  cuisine: 'American',
+  grades: [
+    { date: ISODate("2014-06-10T00:00:00.000Z"), grade: 'A', score: 5 },
+    { date: ISODate("2013-06-05T00:00:00.000Z"), grade: 'A', score: 7 },
+    {
+      date: ISODate("2012-04-13T00:00:00.000Z"),
+      grade: 'A',
+      score: 12
+    },
+    {
+      date: ISODate("2011-10-12T00:00:00.000Z"),
+      grade: 'A',
+      score: 12
+    }
+  ],
+  name: 'Riviera Caterer',
+  restaurant_id: '40356018'
+}
+```
+* Query: `db.listingsAndReviews.find( {}, {address: 1, name: 1} )`
+* Result: 
+```
+{
+  _id: ObjectId("5eb3d668b31de5d588f4292a"),
+  address: {
+    building: '2780',
+    coord: [ -73.98241999999999, 40.579505 ],
+    street: 'Stillwell Avenue',
+    zipcode: '11224'
+  },
+  name: 'Riviera Caterer'
+}
+```
+* The ID field is returned by default but we can turn this off
+  * By setting `_id: 0` in projection
+    * But can't use inclusion and exclusion at the same time for other fields apart from _id
+* We can exclude fields but include all others
+  * `db.restaurants.find( {}, {grades: 0} )`
 
 
-
+### Other methods
+* The `.count()` method returns the number of documents that match a query.
+* The `.limit()` method can be chained to the .find() method, we pass in how many documents we want output.
+* The `$exists` operator can be included in a query filter to only match documents that contain the given field.
+* The `$ne` operator helps check if a field is not equal to a specified value.
+* The `$and` and $or operators help perform AND or OR logic operators.
+* `.pretty()` method makes query outputs nicer
 
 
 
