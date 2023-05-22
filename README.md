@@ -214,7 +214,7 @@ restaurants> db.listingsAndReviews.find({"address.zipcode": "11231"})
 * gt stands for **greater than**
   * Conversely lt is **less than**
 * Syntax example: `db.<collection>.find( { <field>: { $gt: <value> } } )`
-* In E.g below we want to find all parks founded after and not including1900:
+* In E.g below we want to find all parks founded after and not including 1900:
 ```
 {
  name: "Yosemite National Park",
@@ -262,6 +262,77 @@ db.<collection>.find().sort(
   }
 )
 ```
+Example: `db.records.find().sort({ "release_year": 1 });`
+```
+{
+  _id: ObjectId(...),
+  artist: "The Beatles",
+  album: "Abbey Road",
+  release_year: 1969
+},
+{
+  _id: ObjectId(...),
+  artist: "Talking Heads",
+  album: "Stop Making Sense",
+  release_year: 1984
+},
+{
+  _id: ObjectId(...),
+  artist: "Prince",
+  album: "Purple Rain",
+  release_year: 1984
+},
+{
+  _id: ObjectId(...),
+  artist: "Tracy Chapman",
+  album: "Tracy Chapman",
+  release_year: 1988
+}
+…
+```
+* In this example the 2nd and 3rd records may be returned in different ordered as the sorted field is duplicated
+  * If we ran the query multiples times
+* It's also possible to sort on multiple fields
+  * Records will be sorted on first field
+    * Then any duplicates will be sorted on 2nd field
+  * E.g: `db.records.find().sort({ "release_year": 1,  "artist": 1 });`
+    * Documents will be sorted 1st by release year and then for each year value they would be sorted on artist
+```
+{
+  _id: ObjectId(...),
+  artist: "The Beatles",
+  album: "Abbey Road",
+  release_year: 1969
+},
+{
+  _id: ObjectId(...),
+  artist: "Prince",
+  album: "Purple Rain",
+  release_year: 1984
+},
+{
+  _id: ObjectId(...),
+  artist: "Talking Heads",
+  album: "Stop Making Sense",
+  release_year: 1984
+},
+{
+  _id: ObjectId(...),
+  artist: "Tracy Chapman",
+  album: "Tracy Chapman",
+  release_year: 1988
+}
+…
+```
+
+
+
+
+
+
+
+
+
 
 
 ### Operations
