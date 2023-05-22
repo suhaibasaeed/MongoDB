@@ -242,6 +242,28 @@ Query: db.national_parks.find({ founded: { $gt: 1900 }});
 * Alternative is `$gte`
   * Greater than or equal to
 * **We can also use lt or gt on strings**
+  * E.g. here returns restaurants with first letter of C or lower i.e. A or B `db.listingsAndReviews.find({"address.street": {$lte: "C"}})`
+
+#### Sorting Documents
+* We can use the `.sort()` method to sort our results before we return them
+  * Argument is document with fields we want to sort on
+    * As well as value
+      * Specifying 1 or -1
+        * 1 for **ascending**
+          * For datetime fields this would be chronological order
+        * -1 for **descending**
+  * Syntax:
+```
+db.<collection>.find().sort(
+  {
+    <field>: <value>,
+    <second_field>: <value>,
+    …
+  }
+)
+```
+
+
 ### Operations
 * **Comparison operators on Array fields**
   * `.find()` method can query a collection with comparison operators
