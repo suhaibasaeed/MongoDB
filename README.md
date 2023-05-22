@@ -158,6 +158,63 @@ restaurants> db.listingsAndReviews.find()
 ...
 ```
 #### Querying Collections
+* We can pass queries into the `.find()` method
+  * As 1st argument
+  * Only documents that match criteria are returned
+  * Syntax:
+```
+db.<collection>.find(
+  {
+    <field>: <value>,
+    <second_field>: <value>
+    ...
+  }
+);
+```
+  * We can pass in as many fields as we like
+    * But they are case sensitive
+* E.g.
+```
+db.auto_makers.find({ country: "Japan" });
+```
+* find() method uses **operator** under the hood
+  * By default implicit $eq operator used
+
+#### Querying Embedded Documents
+* Sometimes we may have nested documents a.k.a **sub-documents**
+* In the example below models field nests data
+```
+{
+  maker: "Honda",
+  country: "Japan",
+  models: [
+    { name: "Accord" },
+    { name: "Civic" },
+    { name: "Pilot" },
+    …
+  ]
+},
+…
+```
+* We can query nested data using `.find()` method via **dot-notation** to access nested fields
+  * E.g.
+```
+db.<collection>.find(
+  { 
+    "<parent_field>.<embedded_field>": <value> 
+  }
+)
+```
+* In the example below we query the nested field of zipcode
+```
+restaurants> db.listingsAndReviews.find({"address.zipcode": "11231"})
+```
+
+#### Comparison Operators: $gt and $lt
+
+
+
+
 
 ### Operations
 * **Comparison operators on Array fields**
