@@ -197,7 +197,7 @@ db.auto_makers.find({ country: "Japan" });
 …
 ```
 * We can query nested data using `.find()` method via **dot-notation** to access nested fields
-  * E.g.
+  * Syntax E.g.
 ```
 db.<collection>.find(
   { 
@@ -211,11 +211,37 @@ restaurants> db.listingsAndReviews.find({"address.zipcode": "11231"})
 ```
 
 #### Comparison Operators: $gt and $lt
-
-
-
-
-
+* gt stands for **greater than**
+  * Conversely lt is **less than**
+* Syntax example: `db.<collection>.find( { <field>: { $gt: <value> } } )`
+* In E.g below we want to find all parks founded after and not including1900:
+```
+{
+ name: "Yosemite National Park",
+ state: "California",
+ founded: 1890
+},
+{
+ name: Crater Lake National Park,
+ state: "Oregon",
+ founded: 1902
+},
+{
+ name: "Mesa Verde National Park",
+ state: "Colorado",
+ founded: 1906
+},
+{
+ name: "Olympic National Park",
+ state: "Washington",
+ founded: 1909
+},
+…
+Query: db.national_parks.find({ founded: { $gt: 1900 }});
+```
+* Alternative is `$gte`
+  * Greater than or equal to
+* **We can also use lt or gt on strings**
 ### Operations
 * **Comparison operators on Array fields**
   * `.find()` method can query a collection with comparison operators
