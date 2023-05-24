@@ -402,11 +402,7 @@ db.<collection>.find(
 * The `$and` and $or operators help perform AND or OR logic operators.
 * `.pretty()` method makes query outputs nicer
 
-
-
-
-
-
+### CRUD I: Querying on Array Fields
 
 ### Operations
 * **Comparison operators on Array fields**
