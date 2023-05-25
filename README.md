@@ -425,6 +425,7 @@ db.<collection>.find(
   genres: ["young adult", "fantasy", "adventure"]
 }
 ```
+#### Matching Individual Array Elements
 * If we wanted a match on a particular element in that array we can just pass it into `.find()` instead
   * But it will also match other elements too
 * E.g. `db.books.find({ genres: "young adult" })`
@@ -453,8 +454,10 @@ db.<collection>.find(
 },
 …
 ```
+#### Matching Multiple Array Elements with $all
 * We can use the `$all` operator to match on multiple elements in array
   * Ignores order or other elements
+  * Essentially matches arrays which contain elements in **any order**
 * E.g. `db.books.find({ genres: { $all: [ "science fiction", "adventure" ] } })`
   * Result:
 ```
@@ -481,12 +484,109 @@ db.<collection>.find(
 },
 …
 ```
+#### Querying on Compound Filter Conditions
+* We could also use **comparison operators** to match documents where elements in array meet condition  
+  * Or multiple conditions
+* E.g. We want to search collection for players who have been singles champion year 2000 onwards
+  * Query:  `db.tennis_players.find({ wimbledon_singles_wins: { $gte: 2000 } });`
+  * Result:
+```
+{
+  _id: ObjectId(...),
+  name: "Serena Williams",
+  country: "United States",
+  wimbledon_singles_wins: [2002, 2003, 2009, 2010, 2012, 2015, 2016]
+},
+{
+  _id: ObjectId(...),
+  name: "Venus Williams",
+  country: "United States",
+  wimbledon_singles_wins: [2000, 2001, 2005, 2007, 2008]
+},
+{
+  _id: ObjectId(...),
+  name: "Roger Federer",
+  country: "Switzerland",
+  wimbledon_singles_wins: [2003, 2004, 2005, 2006, 2007, 2009, 2012, 2017]
+},
+```
+* Similarly we could have multiple conditions
+  * Acts as an **or**
+  * E.g. find all atletes who won the singles after 1971 or before 1935
+  * Query: `db.tennis_players.find({ wimbledon_singles_wins: { $gt: 1971, $lt: 1935 } })`
+  * Result:
+```
+{
+  _id: ObjectId(...),
+  name: "Suzanna Lenglen",
+  country: "United States",
+  wimbledon_singles_wins: [1919, 1920, 1921, 1922, 1923, 1925]
+},
+{
+  _id: ObjectId(...),
+  name: "Roger Federer",
+  country: "Switzerland",
+  wimbledon_singles_wins: [2003, 2004, 2005, 2006, 2007, 2009, 2012, 2017]
+},
+…
+```
+#### Querying for all Conditions with $elemMatch
+* Allows us to specfiy multiple conditions for an array's element that we want to match on for
+  * Acts as **and**
+  * At least one element in array needs to match **all conditions**
+* E.g. below matches on players who won singles between 2000 and 2019
+  * Query: `db.tennis_players.find({ wimbledon_singles_wins: { $elemMatch: { $gte: 2000, $lt: 2020 } } })`
+  * Result:
+```
+{
+  _id: ObjectId(...),
+  name: "Pete Sampras",
+  country: "United States",
+  wimbledon_singles_wins: [1993, 1994, 1995, 1997, 1998, 1999, 2000]
+},
+{
+  _id: ObjectId(...),
+  name: "Serena Williams",
+  country: "United States",
+  wimbledon_singles_wins: [2002, 2003, 2009, 2010, 2012, 2015, 2016]
+},
+{
+  _id: ObjectId(...),
+  name: "Roger Federer",
+  country: "Switzerland",
+  wimbledon_singles_wins: [2003, 2004, 2005, 2006, 2007, 2009, 2012, 2017]
+}
+```
 
-
-
-
-
-
+#### Querying an Array of Embedded Documents
+* We can also query emdedded documents
+  * i.e. dictionaries within other dictionaries
+* E.g. below we query tennis_platers collection for 2nd place players in 2019 - Fields have to be in this **exact order** in doc
+  * Query: `db.tennis_players.find( { "wimbledon_doubles_placements": { year: 2019, place: 2 } } )`
+  * Result
+```
+{
+  _id: ObjectId(...),
+  name: "Gabriela Dabrowski",
+  country: "Canada",
+  wimbledon_doubles_placements: 
+  [{ 
+    year: 2019,
+    place: 2
+  }]
+},
+{
+  _id: ObjectId(...),
+  name: "Yifan Xu",
+  country: “China”,
+  wimbledon_doubles_placements: 
+  [{ 
+    year: 2019,
+    place: 2
+  }]
+}…
+```
+* This query can match a single field: `db.tennis_players.find( { "wimbledon_doubles_placements.year": 2016 } )`
 
 
 ### Operations
