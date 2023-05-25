@@ -403,6 +403,91 @@ db.<collection>.find(
 * `.pretty()` method makes query outputs nicer
 
 ### CRUD I: Querying on Array Fields
+#### Querying for an Entire Array
+* We can pass in an array/list to the `.find()` method
+  * But the array in the document has to be an **exact match**
+    * Arrays with the same elements but different orders and extra elements won't be a match
+  * E.g. `db.books.find({ genres: ["young adult", "fantasy", "adventure"] })`
+    * Result:
+```
+{
+  _id: ObjectId(...),
+  title: "Harry Potter and The Sorcerer's Stone",
+  author: "JK Rowling",
+  year_published: 1997,
+  genres: ["young adult", "fantasy", "adventure"]
+},
+{
+  _id: ObjectId(...),
+  title: "The Gilded Ones",
+  author: "Namina Forna",
+  year_published: 2021,
+  genres: ["young adult", "fantasy", "adventure"]
+}
+```
+* If we wanted a match on a particular element in that array we can just pass it into `.find()` instead
+  * But it will also match other elements too
+* E.g. `db.books.find({ genres: "young adult" })`
+  * Result
+```
+{
+  _id: ObjectId(...),
+  title: "Children of Blood and Bone",
+  author: "Tomi Adeyemi",
+  year_published: 2018,
+  genres: ["fantasy", "young adult", "adventure"]
+},
+{
+  _id: ObjectId(...),
+  title: "The Hunger Games",
+  author: "Suzanne Collins",
+  year_published: 2008,
+  genres: ["young adult", "dystopian", "science fiction"]
+},
+{
+  _id: ObjectId(...),
+  title: "The Black Flamingo",
+  author: "Dean Atta",
+  year_published: 2019,
+  genres: ["young adult", "coming of age", "LGBTQ"]
+},
+…
+```
+* We can use the `$all` operator to match on multiple elements in array
+  * Ignores order or other elements
+* E.g. `db.books.find({ genres: { $all: [ "science fiction", "adventure" ] } })`
+  * Result:
+```
+{
+  _id: ObjectId(...),
+  title: "Jurassic Park",
+  author: "Michael Crichton",
+  year_published: 1990,
+  genres: ["science fiction", "adventure", "fantasy", "thriller"]
+},
+{
+  _id: ObjectId(...),
+  title: "A Wrinkle in Time",
+  author: "Madeleine L'Engle",
+  year_published: 1962,
+  genres: ["young adult", "fantasy", "science fiction", "adventure"]
+},
+{
+  _id: ObjectId(...),
+  title: "Dune",
+  author: "Frank Herbert",
+  year_published: 1965,
+  genres: ["science fiction", "fantasy", "adventure"]
+},
+…
+```
+
+
+
+
+
+
+
 
 ### Operations
 * **Comparison operators on Array fields**
