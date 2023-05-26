@@ -588,6 +588,10 @@ db.<collection>.find(
 ```
 * This query can match a single field: `db.tennis_players.find( { "wimbledon_doubles_placements.year": 2016 } )`
 
+#### Additional Operators
+* `$size` operator matches any array with no. of elements we specify
+* `$in` operator matches documents where we pass in array that contains elements in specified array
+* `$nin` operator is essentially opposite of above. in order words `not in`
 
 ### Operations
 * **Comparison operators on Array fields**
