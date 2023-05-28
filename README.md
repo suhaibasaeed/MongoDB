@@ -128,6 +128,13 @@ test> use restaurants
 switched to db restaurants
 restaurants>
 ```
+* To view all collections use `show collections` command
+  * E.g.
+```
+codecadestream> show collections
+channels
+users
+```
 #### Introduction to Querying
 * We can use the `.find()` method on a specific collection
   * Cursor returned
