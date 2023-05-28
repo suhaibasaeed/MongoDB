@@ -564,6 +564,11 @@ db.<collection>.find(
   wimbledon_singles_wins: [2003, 2004, 2005, 2006, 2007, 2009, 2012, 2017]
 }
 ```
+* Example 2: Find no. of channels which have at least 1 follower in followers array that have is_subscribed value set to true
+```
+db.channels.find({followers: {$elemMatch: { is_subscribed: true}}}).count()
+55
+```
 
 #### Querying an Array of Embedded Documents
 * We can also query emdedded documents
