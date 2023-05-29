@@ -603,7 +603,23 @@ db.channels.find({followers: {$elemMatch: { is_subscribed: true}}}).count()
 
 ### CRUD II: Inserting & Updating
 #### The _id Field
+* MongoDB uses it to identify each unique document
+* Usually looks like this `_id: ObjectId("5eb3d668b31de5d588f4305b")`
+  * Type is ObjectId
+    * 12-byte data type
+    * Also contains embedded timestamp when generated automatically
+      * Allows documents ro bw **inserted** in order of creation
+* id field characteristics
+  * **Required** for all documents and must be **unique**
+  * MongoDB auto generates field if we don't provide it
+  * If we wanted to specify it ourselves we can make it a **string** or **int**
+    * Instead of `ObjectId` field
+* Field is **immutable**
+  * i.e. it can't be updated or changed
 
+
+#### Inserting a Single Document
+* 
 
 
 #### Additional Operators
