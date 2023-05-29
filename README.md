@@ -710,7 +710,46 @@ db.students.insertMany([
 }
 ```
 #### Updating a Single Document
-
+* We can use the `updateOne()` method to update a single document
+  * It finds the **first** document that matches the filter creiteria
+  * **Only updates first matching document even if multiple match**
+  * Parameters
+    * `filter`: Document with selection criteria
+    * `update`: Document with any modifications to apply
+      * i.e. modify existing fields, insert new fields or replace entire document
+    * `options`: Document with any other extras
+      * E.g. `writeConcern` or `upsert`
+* Syntax:
+```
+db.<collection>.updateOne(<filter>, <update>, <options>)
+```
+* Example below is of a collection called products which holds iPhone inventory info
+```
+{ 
+  _id: ObjectId("507f1fg7bcf865d799439h11"), 
+  title: "iPhoneX", 
+  price: 1000,
+  stock: 25 
+},
+{ 
+  _id: ObjectId("507f1fg7bcf865d799439h12"), 
+  title: "iPhone7", 
+  price: 600,
+  stock: 25 
+},
+{ 
+  _id: ObjectId("507f1fg7bcf865d799439h13"), 
+  title: "iPhone6", 
+  price: 500,
+  stock: 25 
+}
+```
+* Our update command will need to specify **which fields** we want to update and **how**
+  * Latter done via **update operators**
+  * E.g. below uses `$set` operator to **replace** a fields value
+    * Filter is `title` field
+  * Command: `db.products.updateOne({ title: "iPhoneX" }, { $set: { price: 679 } });`
+  * Result: `{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }`
 
 #### Additional Operators
 * `$size` operator matches any array with no. of elements we specify
