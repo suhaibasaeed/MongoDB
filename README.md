@@ -332,6 +332,17 @@ Example: `db.records.find().sort({ "release_year": 1 });`
 …
 ```
 
+* We can also use the `findOne()` method to query a collection for a **single document**
+  * E.g below returns single document based on `restaurant_id` field
+```
+restaurants> db.listingsAndReviews.findOne({restaurant_id: "40564243"})
+{
+  _id: ObjectId("6474e992b189aac9043893ce"),
+  name: 'Elvins',
+  cuisine: 'American',
+  restaurant_id: '40564243'
+}
+```
 #### Query Projections
 * Allows us to return **specfic fields** instead of entire document
   * As we may only need some things
@@ -619,8 +630,36 @@ db.channels.find({followers: {$elemMatch: { is_subscribed: true}}}).count()
 
 
 #### Inserting a Single Document
-* 
-
+* We can use the `.insertOne()` method to add a **new document** to our collection
+  * One mandatory parameter and one optional which is `writeConcern`
+    * Latter allows us to say how we want write requests ack'd
+* Syntax:
+```
+db.<collection>.insertOne(
+  <new_document>, 
+  {
+    writeConcern: <document>,
+  }
+);
+```
+* Example:
+```
+db.videogames.insertOne({
+  title: "Elden Ring",
+  year: 2022,
+  company: "Fromsoftware"
+});
+```
+* Result:
+  * `acknowledged` is related to `writeConcern` parameter
+  * `insertedId` returns the ID of the object
+```
+{
+  "acknowledged": true,
+  "insertedId": ObjectId("5fd989674e6b9ceb8665c63d")
+}
+```
+* If we try to insert into a collection that **doesn't exist** MongoDB will create one then do it
 
 #### Additional Operators
 * `$size` operator matches any array with no. of elements we specify
