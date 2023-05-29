@@ -600,6 +600,12 @@ db.channels.find({followers: {$elemMatch: { is_subscribed: true}}}).count()
 ```
 * This query can match a single field: `db.tennis_players.find( { "wimbledon_doubles_placements.year": 2016 } )`
 
+
+### CRUD II: Inserting & Updating
+#### The _id Field
+
+
+
 #### Additional Operators
 * `$size` operator matches any array with no. of elements we specify
 * `$in` operator matches documents where we pass in array that contains elements in specified array
