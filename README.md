@@ -661,6 +661,57 @@ db.videogames.insertOne({
 ```
 * If we try to insert into a collection that **doesn't exist** MongoDB will create one then do it
 
+
+#### Inserting Multiple Documents
+* We can use the `insertMany()` method to insert more than one document at once
+  * 3 parameters
+    * Array of documents
+    * `writeconcrn`
+    * `ordered`: default is True
+      * Should it insert in same format as we pass in or unordered i.e. we don't care about order
+      * If set to True - single document insert failure means all fail
+        * When False i.e. unordered insert, an insertion failure of one doesn't affect other documents in array
+* Syntax:
+```
+db.<collection>.insertMany(
+  [<document1>, <document2>, ...],
+  {
+    writeConcern: <document>,
+    ordered: <boolean>
+  }
+);
+```
+* Example
+```
+db.students.insertMany([
+  {
+    name: "Mia Ramirez",
+    age: 15
+  },
+  {
+    name: "Kiv Huang",
+    age: 17
+  },
+  {
+    name: "Sam Soto",
+    age: 16
+  }
+], { ordered: true })
+```
+* Output:
+```
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId("63054a5376742c0e5a0cfafb"), // Mia
+    '1': ObjectId("63054a5376742c0e5a0cfafc"), // Kiv
+    '2': ObjectId("63054a5376742c0e5a0cfafd") // Sam
+  }
+}
+```
+#### Updating a Single Document
+
+
 #### Additional Operators
 * `$size` operator matches any array with no. of elements we specify
 * `$in` operator matches documents where we pass in array that contains elements in specified array
