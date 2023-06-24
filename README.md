@@ -751,6 +751,8 @@ db.<collection>.updateOne(<filter>, <update>, <options>)
   * Command: `db.products.updateOne({ title: "iPhoneX" }, { $set: { price: 679 } });`
   * Result: `{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }`
 
+#### Updates on Embedded Documents
+* Also possible to make 
 #### Additional Operators
 * `$size` operator matches any array with no. of elements we specify
 * `$in` operator matches documents where we pass in array that contains elements in specified array
