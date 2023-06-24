@@ -752,7 +752,40 @@ db.<collection>.updateOne(<filter>, <update>, <options>)
   * Result: `{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }`
 
 #### Updates on Embedded Documents
-* Also possible to make 
+* Also possible to make changes to embedded documents i.e. field inside dictionary
+  * Example below shows document in collection called `furniture`
+```
+{
+  _id: ObjectId("3ldh1fg733kf65d7994393ld"),
+  name: "bedframe",
+  dimensions: {
+    length: 75,
+    width: 38
+  }
+}
+```
+  * To update width field we can use below command
+```
+db.furniture.updateOne(
+  { name: "bedframe" },
+  { $set: { "dimensions.width": 54 }}
+);
+```
+* Similarly if we had an array we wanted to update we can use dot notation but specify **array index** instead
+```
+{
+  _id: ObjectId("402h1fg73cf865d799439k42"),
+  team: "Chicago Bulls",
+  championships: [1991, 1902, 1993, 1996, 1997, 1998]
+}
+```
+  * Our command to update the 2nd item in the list championships i.e. change 1902 to 1992
+```
+db.nbateams.updateOne(
+  { team: "Chicago Bulls" }, 
+  { $set: {"championships.1": 1992 }}
+)
+```
 #### Additional Operators
 * `$size` operator matches any array with no. of elements we specify
 * `$in` operator matches documents where we pass in array that contains elements in specified array
