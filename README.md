@@ -786,6 +786,8 @@ db.nbateams.updateOne(
   { $set: {"championships.1": 1992 }}
 )
 ```
+#### Updating an Array with New Elements
+
 #### Additional Operators
 * `$size` operator matches any array with no. of elements we specify
 * `$in` operator matches documents where we pass in array that contains elements in specified array
