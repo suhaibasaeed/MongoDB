@@ -854,6 +854,7 @@ db.pets.updateOne(
   { upsert: true }
 )
 ```
+#### Updating Multiple Documents
 
 #### Additional Operators
 * `$size` operator matches any array with no. of elements we specify
