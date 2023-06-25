@@ -823,6 +823,38 @@ db.vehicles.updateOne(
 ```
 * If we use $push on a field that **doesn't exist** it will add that field to document
 #### Upserting a Document
+* Upsert allows us to **combine** updating and inserting of data into a collection
+  * **Optional** parameter for methods like `.updateOne()`
+    * Accepts boolean
+      * Set to False by default
+    * If True it will **update** data if there is matchingdocument
+    * Else it will insert **new document**
+* Syntax:
+```
+db.<collection>.updateOne(
+  <filter>, 
+  <update>, 
+  { upsert: <boolean> }
+);
+```
+* Example below uses collection namd pets with documents having the below structure
+```
+{
+  _id: ObjectId(...),
+  name: "Luna",
+  type: "Cat",
+  age: 2
+}
+```
+* Upsert useful in a scenario when we want to capture age but we're unsure if document already exists
+* Command below searches for Cat with Name Luna, if it finds it then updates age otherwise creates creates new document with specified details
+db.pets.updateOne(
+  { name: "Luna", type: "Cat"},
+  { $set: { age: 3 }},
+  { upsert: true }
+)
+```
+
 #### Additional Operators
 * `$size` operator matches any array with no. of elements we specify
 * `$in` operator matches documents where we pass in array that contains elements in specified array
