@@ -822,6 +822,7 @@ db.vehicles.updateOne(
 }
 ```
 * If we use $push on a field that **doesn't exist** it will add that field to document
+#### Upserting a Document
 #### Additional Operators
 * `$size` operator matches any array with no. of elements we specify
 * `$in` operator matches documents where we pass in array that contains elements in specified array
