@@ -787,7 +787,41 @@ db.nbateams.updateOne(
 )
 ```
 #### Updating an Array with New Elements
-
+* We could use `$push` operator to append elements to end of array
+  * Used along with `updateOne()` method
+* Syntax:
+```
+db.<collection>.updateOne(
+  <filter>,
+  { $push: { <field1>: <value1>, ... } }
+);
+```
+* Example below shows collection called automobiles with document as below
+```
+{
+  _id: ObjectId("627934bbfd6a8619040cc287"),
+  make: "Audi",
+  model: "A1",
+  year: [2017, 2019]
+}
+```
+* We push new element to **year array** via below command
+```
+db.vehicles.updateOne(
+  { make: "Audi" },
+  { $push: { year: 2020 }}
+);
+```
+* Updated document now looks like this:
+```
+{
+  _id: ObjectId("627934bbfd6a8619040cc287"),
+  make: "Audi",
+  model: "A1",
+  year: [2017, 2019, 2020]
+}
+```
+* If we use $push on a field that **doesn't exist** it will add that field to document
 #### Additional Operators
 * `$size` operator matches any array with no. of elements we specify
 * `$in` operator matches documents where we pass in array that contains elements in specified array
