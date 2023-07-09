@@ -1091,6 +1091,9 @@ db.employees.replaceOne(
 * Again `.replaceOne()` only replaces the 1st matched document
   * Not all
 
+#### Extras
+* `.findOneAndReplace()` method is similar to `.replaceOne()` but it returns the original/new document
+* `.findOneAndDelete()` method deletes and returns the deleted document
 
 ### Indexing in MongoDB Article
 #### What is Indexing
@@ -1105,16 +1108,19 @@ db.employees.replaceOne(
   * Ok for small collections but otherwise bad for performance
 
 #### Types of Indexes in MongoDB
-* Single-field index - Reference one-field of document
+* **Single-field index** - Reference one-field of document
   * E.g. School teacher wants to find all people who studied abroad in Argentina
     * One option is to run query on all alumni who studied in argentina
       * Better option is to create single-field index on field exclusive to these people
       * Captures subset of alumni data
-![Single-Field Index](./images/alumni-single-field-index.jpg)
 
-#### Extras
-* `.findOneAndReplace()` method is similar to `.replaceOne()` but it returns the original/new document
-* `.findOneAndDelete()` method deletes and returns the deleted document
+* Example:
+![Single-Field Index](./images/alumni-single-field-index.jpg)
+  * Teacher can then use this index to query spercific countries
+      * Query more efficient as subset of data is scanned as opposed to all
+      * Also faster as infexes **arrange** data in ascending/descending order
+* **Compound Index** - 
+
 
 #### Additional Operators
 * `$size` operator matches any array with no. of elements we specify
