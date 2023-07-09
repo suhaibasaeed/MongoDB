@@ -1105,7 +1105,12 @@ db.employees.replaceOne(
   * Ok for small collections but otherwise bad for performance
 
 #### Types of Indexes in MongoDB
-
+* Single-field index - Reference one-field of document
+  * E.g. School teacher wants to find all people who studied abroad in Argentina
+    * One option is to run query on all alumni who studied in argentina
+      * Better option is to create single-field index on field exclusive to these people
+      * Captures subset of alumni data
+![Single-Field Index](./images/alumni-single-field-index.jpeg)
 
 #### Extras
 * `.findOneAndReplace()` method is similar to `.replaceOne()` but it returns the original/new document
