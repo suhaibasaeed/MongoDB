@@ -981,6 +981,10 @@ db.foodTrucks.findAndModify({
   * We can do **multiple write operations** using `.bulkwrite()` method
     * Updating or inserting
 
+### CRUD II: Deleting Documents
+#### Deleting a Document
+
+
 #### Additional Operators
 * `$size` operator matches any array with no. of elements we specify
 * `$in` operator matches documents where we pass in array that contains elements in specified array
