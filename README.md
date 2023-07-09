@@ -926,6 +926,9 @@ db.<collection>.findAndModify({
     * False by default
   * Upsert - Create new document if query fails to match document
   * Also supports other options
+    * ordered - if set to **false** it will insert documents in unordered format
+      * Increased performance
+    * 
 * Example below has foodTrucks collection
 ```
 {
@@ -950,7 +953,6 @@ db.foodTrucks.findAndModify({
 ```
   * Output
 ```
-//Output
 {
   _id: ObjectId(...),
   name: "Criff Dogs",
@@ -969,6 +971,15 @@ db.foodTrucks.findAndModify({
 ```
 * `.findAndModify()` is very similar to `.updateOne()` but latter doesn't return new document
 
+#### Review
+* Extras
+  * We can use `$unset` with `.updateOne()` or `.updateMany()` methods to **remove field** from document
+  * `.findOneAndUpdate()` method is similar to `updateOne()`
+    * But returns original or updated doc instead
+  * Possible to update **name of collection** without modifying documents
+    * Done via `.renameCollection()`
+  * We can do **multiple write operations** using `.bulkwrite()` method
+    * Updating or inserting
 
 #### Additional Operators
 * `$size` operator matches any array with no. of elements we specify
