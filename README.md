@@ -906,7 +906,7 @@ db.employees.updateMany(
 ```
 
 #### Modifying Documents
-* We can use the `findandmodify()` method to **update and return** a document we've just modified
+* We can use the `findAndmodify()` method to **update and return** a document we've just modified
   * Single document returned
     * By default **doesn't** include modifications made
 * Syntax
