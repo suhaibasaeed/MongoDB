@@ -958,7 +958,18 @@ db.foodTrucks.findAndModify({
   shutdown: false
 }
 ```
-* Another example below
+* Another example below shows how we can use **upsert** option
+```
+db.foodTrucks.findAndModify({
+  query:  { name: "Ben and Jerry", address: "17 Cliff Pl" },
+  update: { shutdown: false },
+  new: true,
+  upsert: true
+});
+```
+* `.findAndModify()` is very similar to `.updateOne()` but latter doesn't return new document
+
+
 #### Additional Operators
 * `$size` operator matches any array with no. of elements we specify
 * `$in` operator matches documents where we pass in array that contains elements in specified array
