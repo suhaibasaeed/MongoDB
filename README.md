@@ -983,7 +983,43 @@ db.foodTrucks.findAndModify({
 
 ### CRUD II: Deleting Documents
 #### Deleting a Document
+* There are different ways to delete documents from a collection
+* One of these is the `.deleteOne()` method
+  * Syntax: `db.<collection>.deleteOne(<filter>, <options>);`
+    * Arguments:
+      * filter - Document with selection criteria
+      * options - Document with **optional fields**
+        * E.g. `writeConcern`
+* Example below uses this document called `monsters`
+```
+{
+  _id: ObjectId(...),
+  name: "Luca",
+  age: 100,
+  type: "Hydra"
+},
+{
+  _id: ObjectId(...),
+  name: "Lola",
+  age: 95,
+  type: "Hydra"
+},
+{
+  _id: ObjectId(...),
+  name: "Igor",
+  age: 95,
+  type: "Chimera"
+},
+```
+* In this example we delete a single monster with age 95
+  * `db.monsters.deleteOne({ age: 95 });`
+* The output is as below
+  * `{ acknowledged: true, deletedCount: 1 }`
+* **This method only deletes one document**
+  * If we have multiple with same name which one may depend on order of insertion or indexing etc.
 
+#### Deleting Multiple Documents
+* The `.deleteMany()`
 
 #### Additional Operators
 * `$size` operator matches any array with no. of elements we specify
