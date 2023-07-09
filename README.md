@@ -1032,6 +1032,67 @@ db.foodTrucks.findAndModify({
   * Output:
     * `{ acknowledged: true, deletedCount: 3 }`
 
+#### Replacing a Document
+* Sometimes we might want to delete a document and then immediately **replace** it with another one
+  * `.replaceOne()` method allows us to do this
+    * Means we don't need to do separate delete and insert method calls
+  * This method replaces **first matched document** inside collection
+  * Syntax
+```
+db.<collection>.replaceOne(
+  <filter>, 
+  <replacement>, 
+  <options>
+);
+```
+  * Arguments
+    * filter - document with selection criteria
+    * replacement - new document which will replace current one
+      * Can be subset of original document
+        * i.e. doesn't need all fields
+    * options - Document with optional fields
+        * E.g. `upsert`
+* In the example below we have `employees` collection
+  * Rohit Kohli leaves company but we still want to keep his name but not his title
+    * We want to remove the other fields
+```
+{
+  _id: ObjectId(...),
+  name: "Rohit Kohli",
+  department: "Customer Analytics"
+  position: "Senior Software Engineer"
+},
+{
+  _id: ObjectId(...),
+  name: "Rin Paterson",
+  department: "People Operations",
+  position: "Head of People Operations"
+}
+```
+  * New inserted document only has name and changes position to N/A
+```
+db.employees.replaceOne(
+  { name: "Rhoit Kohli" }, 
+  { name: "Rohit Kohli", position: "N/A" }
+);
+```
+  * Output: 
+```
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+```
+* Difference between this method and `.updateOne()` are that latter only updates specific fields
+  * Not entire document
+* Again `.replaceOne()` only replaces the 1st matched document
+  * Not all
+
+#### Extras
+
 #### Additional Operators
 * `$size` operator matches any array with no. of elements we specify
 * `$in` operator matches documents where we pass in array that contains elements in specified array
