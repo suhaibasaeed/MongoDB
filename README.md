@@ -1092,6 +1092,8 @@ db.employees.replaceOne(
   * Not all
 
 #### Extras
+* `.findOneAndReplace()` method is similar to `.replaceOne()` but it returns the original/new document
+* `.findOneAndDelete()` method deletes and returns the deleted document
 
 #### Additional Operators
 * `$size` operator matches any array with no. of elements we specify
