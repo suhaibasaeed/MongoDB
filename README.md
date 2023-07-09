@@ -1019,7 +1019,18 @@ db.foodTrucks.findAndModify({
   * If we have multiple with same name which one may depend on order of insertion or indexing etc.
 
 #### Deleting Multiple Documents
-* The `.deleteMany()`
+* The `.deleteMany()` method removes **all** documents given a specific filter
+  * Syntax: `db.<collection>.deleteMany(<filter>, <options>);`
+  * Arguments
+    * filter - document with selection criteria
+    * options - Document with optional fields
+        * E.g. `writeConcern`
+* **If we forgot to provide filter then ALL documents from collection will be deleted**
+* Example below uses same monsters collection as before
+  * Delete all monsters that have tpye as hydra
+  * `db.monsters.deleteMany({ type: "Hydra" });`
+  * Output:
+    * `{ acknowledged: true, deletedCount: 3 }`
 
 #### Additional Operators
 * `$size` operator matches any array with no. of elements we specify
