@@ -848,6 +848,7 @@ db.<collection>.updateOne(
 ```
 * Upsert useful in a scenario when we want to capture age but we're unsure if document already exists
 * Command below searches for Cat with Name Luna, if it finds it then updates age otherwise creates creates new document with specified details
+```
 db.pets.updateOne(
   { name: "Luna", type: "Cat"},
   { $set: { age: 3 }},
@@ -855,7 +856,109 @@ db.pets.updateOne(
 )
 ```
 #### Updating Multiple Documents
+* We can use `updateMany()` method to update **all documents** which match condition
+  * Works in similar way to `updateOne()`
+* Syntax:
+  * Filter - Selection criteria
+  * Update - Modifications we want to apply
+  * Options - Other options like upsert
+```
+db.<collection>.updateMany(
+  <filter>, 
+  <update>, 
+  <options>
+);
+```
+* Example below updates all employees with salary of $75000 to $80000
+  * Document looks like the below
+```
+{
+  _id: ObjectId(...),
+  name: "Rose Nyland",
+  department: "Information Technology",
+  salary: 75000
+},
+{
+  _id: ObjectId(...),
+  name: "Dorothy Zbornak",
+  department: "Human Resources",
+  salary: 75000
+},
+{
+  _id: ObjectId(...),
+  name: "Sophia Petrillo",
+  department: "Human Resources",
+  salary: 75000
+},
+{
+  _id: ObjectId(...),
+  name: "Blanche Devereaux",
+  department: "Sales",
+  salary: 80000
+}
+```
+  * Set new salary for those on 75k only
+```
+db.employees.updateMany(
+  { salary: 75000 },
+  { $set: { salary: 80000 }}
+)
+```
 
+#### Modifying Documents
+* We can use the `findandmodify()` method to **update and return** a document we've just modified
+  * Single document returned
+    * By default **doesn't** include modifications made
+* Syntax
+```
+db.<collection>.findAndModify({
+  query: <document>,
+  update: <document>,
+  new: <boolean>,
+  upsert: <boolean>,
+  ...
+});
+```
+* Arguments
+  * query - Selection criteria
+  * update - Document with fields and changes we want to make to them
+  * new - Returns modified document when set to **True**
+    * False by default
+  * Upsert - Create new document if query fails to match document
+  * Also supports other options
+* Example below has foodTrucks collection
+```
+{
+  _id: ObjectId(...),
+  name: "Criff Dogs",
+  address: "15 Bedford Ave",
+  shutdown: false
+},
+{
+  _id: ObjectId(...),
+  name: "Sals Pizza",
+  address: "249 Otter Place",
+  shutdown: false
+}
+```
+  * This example will return the document **before modification**
+```
+db.foodTrucks.findAndModify({
+  query:  { name: "Criff Dogs" },
+  update: { shutdown: true }
+});
+```
+  * Output
+```
+//Output
+{
+  _id: ObjectId(...),
+  name: "Criff Dogs",
+  address: "15 Bedford Ave",
+  shutdown: false
+}
+```
+* Another example below
 #### Additional Operators
 * `$size` operator matches any array with no. of elements we specify
 * `$in` operator matches documents where we pass in array that contains elements in specified array
