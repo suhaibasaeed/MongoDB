@@ -1110,7 +1110,7 @@ db.employees.replaceOne(
     * One option is to run query on all alumni who studied in argentina
       * Better option is to create single-field index on field exclusive to these people
       * Captures subset of alumni data
-![Single-Field Index](./images/alumni-single-field-index.jpeg)
+![Single-Field Index](./images/alumni-single-field-index.jpg)
 
 #### Extras
 * `.findOneAndReplace()` method is similar to `.replaceOne()` but it returns the original/new document
