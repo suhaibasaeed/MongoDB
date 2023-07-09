@@ -1091,6 +1091,22 @@ db.employees.replaceOne(
 * Again `.replaceOne()` only replaces the 1st matched document
   * Not all
 
+
+### Indexing in MongoDB Article
+#### What is Indexing
+* Prevents us having to search entire DB to find our result
+* Helps queries be more efficient
+* Index is **special data structure**
+  * Stores portion of a collections data in easy to search format
+* Similar to index in a book
+  * E.g. instead of reading book cover to cover to find all instances of Japan
+    * Just go to index at the back where it tells us page numbers
+* **Queries that don't use indexes have to parse each doucment in collection to find matches**
+  * Ok for small collections but otherwise bad for performance
+
+#### Types of Indexes in MongoDB
+
+
 #### Extras
 * `.findOneAndReplace()` method is similar to `.replaceOne()` but it returns the original/new document
 * `.findOneAndDelete()` method deletes and returns the deleted document
