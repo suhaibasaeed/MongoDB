@@ -1143,6 +1143,54 @@ db.employees.replaceOne(
 ### Introduction to Indexing
 
 #### Single Field Index
+* MongoDB creates default index on `_id` field for all documents
+* We can use the `.createIndex()` method to create **custom index**
+* Syntax: `db.<collection>.createIndex({ <keys>, <options>, <commitQuorum>)}`
+  * arguments: 
+    * keys: Document with *field* & *value* **pairs**
+      * field is index key
+      * value is type of index
+    * options: Document with optional params
+    * commitQuoroum: Gives control over replica sets
+* For keys parameter fields can be assigned value of `1` or `-1`
+  * 1 - sort index in **ascending** order
+  * -1 - sort index **descending** order
+* Example below uses colleciton called students
+```
+{ 
+  _id: ObjectId(...),
+  last_name: "Tapia",
+  first_name: "Joseph",
+  major: "architecture",
+  birth_year: 1988,
+  graduation_year: 2012,
+  year_abroad: 2011
+}
+```
+  * Rather than querying entire collection by `year_abroad` field to find students who were abroad in a year create index
+    * Single field index on this field via this command: `db.students.createIndex({ year_abroad: 1 });`
+      * Creates index on all documents in students collection on `year_abroad` field in ascending order
+  * We can now use `.find()` on new index to find students who studied abroad after 2019
+    * E.g. `db.students.find({ year_abroad: { $gt: 2019 }});`
+    * Saves query execution time as only index with ordered `year_abroad` field scanned instead of entire collection
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 #### Additional Operators
