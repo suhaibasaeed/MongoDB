@@ -1175,6 +1175,46 @@ db.employees.replaceOne(
     * Saves query execution time as only index with ordered `year_abroad` field scanned instead of entire collection
 
 
+#### Performance Insights with .explain()
+* Indexing in MongoDB tied to DB performance
+* `.explain()` method allows us to see how much indexes imapct performance
+* Syntax: `db.<collection>.find(...).explain(<verbose>)`
+  * parameters:
+    * verbose - One of three: queryPlanner/ExecutionStats/allPlansExecution
+* Example uses same students collection as above: 
+ *  Query: `db.students.find({ year_abroad: { $gt: 2019 }}).explain('executionStats');`
+ * Truncated output of `.explain()` method might looks like below BEFORE index creation
+ ```
+ executionStats: {
+  executionSuccess: true,
+  nReturned: 1336,
+  executionTimeMillis: 140,
+  totalKeysExamined: 0,
+  totalDocsExamined: 5555,
+  executionStages: {
+    …
+  }
+}
+ ```
+ * After index creation
+ ```
+ executionStats: {
+  executionSuccess: true,
+  nReturned: 1336,
+  executionTimeMillis: 107,
+  totalKeysExamined: 1336,
+  totalDocsExamined: 1336,
+  executionStages: {
+   …
+  }
+}
+ ```
+  * We can see that before index 5555 documents were examined
+    * But only 1336 after
+  * Plus query after index creation was **33ms faster**
+    * Would be even greater time saving with bigger collection
+ * **Good to try this before and after index creation to see difference**
+ 
 
 
 
