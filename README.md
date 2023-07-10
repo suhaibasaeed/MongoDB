@@ -1130,7 +1130,19 @@ db.employees.replaceOne(
   * Compariable with 2 other indexes 
 
 #### Tradeoffs
-* 
+* Indexes mostly beneficial when selective queries ysed
+  * i.e. result set is small portion of data in collection
+* Indexes improve query performance but write performance suffers
+  * As each index consumes space
+  * Each time we do insert/remove/update on collection index needs to be updated
+    * Thus operation is **slower**
+* Generally using indexes advantage is optimising queries
+  * Improves compute, bandwidth and time efficiency
+
+
+### Introduction to Indexing
+
+#### Single Field Index
 
 
 #### Additional Operators
