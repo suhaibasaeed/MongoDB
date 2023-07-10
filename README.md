@@ -1214,6 +1214,45 @@ db.employees.replaceOne(
   * Plus query after index creation was **33ms faster**
     * Would be even greater time saving with bigger collection
  * **Good to try this before and after index creation to see difference**
+
+
+#### Compound Indexes
+* Compund indexes reference **multiple fields** in document
+  * Multiple-field queries also supported
+* Syntax: 
+```
+db.<collection>.createIndex({ 
+  <field>: <type>, 
+  <field2>: <type>, 
+  …
+})
+```
+* Order of fields is important with compound indexes
+* Example is for students collection and we want to find students who studied abroad in **particular country** and **year**
+  * Index creation: 
+```
+db.students.createIndex({ 
+  study_abroad_nation: 1, 
+  year_abroad: -1 
+});
+```
+  * Becuase we specify `stidy_abroad_nation` first it's sorted on this field 1st
+    * Then each nation will have the `year_abroad` field sorted in reverse order
+    * E.g.
+```
+Argentina 2011
+Argentina 2019
+Brazil 2015
+```
+  * Anytime we query above 2 fields MongoDB will **automatically** use index
+    * Below is e.g. of query
+```
+db.students.find({ 
+  study_abroad_nation: "Brazil", 
+  year_abroad: 2012 
+});
+```
+
  
 
 
