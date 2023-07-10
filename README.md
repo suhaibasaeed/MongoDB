@@ -1252,8 +1252,28 @@ db.students.find({
   year_abroad: 2012 
 });
 ```
+* Compund indexes also supports queries on a **beginning subset** of the indexed fields
+  E.g.
+```
+db.students.createIndex({ 
+  study_abroad_nation: 1, 
+  year_abroad: -1, 
+  graduation_year: 1 
+});
+```
+  * Above supports queries on following fields
+    * `study_abroad_nation`
+    * `study_abroad_nation` and `year abroad`
+    * `study_abroad_nation` and `year abroad` and `graduation_year`
+  * But not on these fields due to the order
+    * `year_abroad`
+    * `graduation_year`
+    * `year_abroad` and `graduation_year`
+* Consider a compound index as it could be **more efficient** compared to multiple single-field indexes
+  * As **each index** has to be **updated** as **document changes**
+  * Too many indexes can hurt DB write speed
 
- 
+
 
 
 
