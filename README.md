@@ -1119,7 +1119,18 @@ db.employees.replaceOne(
   * Teacher can then use this index to query spercific countries
       * Query more efficient as subset of data is scanned as opposed to all
       * Also faster as infexes **arrange** data in ascending/descending order
-* **Compound Index** - 
+* **Compound Index** - An index on multiple fields
+  * E.g. If we wanted to organise alumni based on **where** and **when** student was abroad
+  * Indexes being ordered helps sort subset of students chronologically
+    * Helps efficiency of range-based query operations
+* **Multi-key index**
+  * Support optimised queries on **array fields**
+    * Each element in array in indexed
+  * Automatically created when we create index on field with array
+  * Compariable with 2 other indexes 
+
+#### Tradeoffs
+* 
 
 
 #### Additional Operators
