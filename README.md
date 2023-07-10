@@ -1293,6 +1293,31 @@ db.students.createIndex({
     * Values sorted in alphabetical order
     * Index contains **individual references** to **each element** in array
 
+#### Multikey Index on Compound Fields
+* Only possible where **one field** is an array
+* In example below we have students collection
+```
+{ 
+  _id: ObjectId(...),
+  last_name: "Tapia",
+  first_name: "Joseph",
+  major: "architecture",
+  birth_year: 1988,
+  graduation_year: 2012 ,
+  sports: ["rowing", "boxing"],
+  clubs: [“Honor Society”, “Student Government”, “Yearbook Committee”]
+}
+```
+  * Not possible to create index on BOTH `sports` and `clubs` fields
+    * We'd have to create **two separate** indexes
+    * But index with either one of these and another field is possible
+* Below is 2 examples of compound multikey index
+```
+db.students.createIndex({ sports: 1, major: 1 });
+db.students.createIndex({ clubs: -1, graduation_year: -1 });
+```
+
+#### Deleting Index
 
 
 
