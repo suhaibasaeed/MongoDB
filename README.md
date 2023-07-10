@@ -1317,8 +1317,38 @@ db.students.createIndex({ sports: 1, major: 1 });
 db.students.createIndex({ clubs: -1, graduation_year: -1 });
 ```
 
-#### Deleting Index
+#### Deleting an Index
+* Any time changes made to collection the indexes also have to be updated
+  * Indexes that aren't really used slow down some CRUD operations
+    * Important to get rid of any redundant ones
+* We can use `.getIndexes()` method to see indexes for collection
+  * E.g. `db.students.getIndexes();`
+  * Output
+```
+[
+   {  v : 1,
+      key : { _id : 1 },
+      name : '_id_'
+   },
+   {
+      v : 1,
+      key : { sports : -1 },
+      name : 'sports_-1'
+   },
+   {
+      v : 1,
+      key : { sports : -1, graduation year : -1 },
+      name : 'sports_-1_graduation_year_-1'
+   }
+]
+```
+  * 2nd index `sports_-1` is unneeded as `sports_-1_graduation_year_-1` compound index supports queries on prefixed fields
+* We can **remove index** without changing original collection via `.dropIndex()` method
+  * Specify name of index inside parenthesis
+  * E.g. `db.students.dropIndex('sports_-1');`
+* Deleting redundant indexes can increase **free disk space** and improve **write operations performance**
 
+#### Extra
 
 
 
