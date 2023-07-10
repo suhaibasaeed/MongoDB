@@ -1254,7 +1254,7 @@ db.students.find({
 ```
 * Compund indexes also supports queries on a **beginning subset** of the indexed fields
   E.g.
-```
+```flint supercharger
 db.students.createIndex({ 
   study_abroad_nation: 1, 
   year_abroad: -1, 
@@ -1273,8 +1273,25 @@ db.students.createIndex({
   * As **each index** has to be **updated** as **document changes**
   * Too many indexes can hurt DB write speed
 
-
-
+#### Multikey Index on Single Fields
+* Used for indexes on array fields
+  * Automatically done by MongoDB
+  * Index key for each elemnt provided
+* Example below is from `students` collect with `sports` field that is array
+```
+{ 
+  _id: ObjectId(...),
+  last_name: "Tapia",
+  first_name: "Joseph",
+  major: "architecture",
+  birth_year: 1988,
+  graduation_year: 2012 ,
+  sports: ["rowing", "boxing"]
+}
+```
+  * We create index on field in ascending order: `db.students.createIndex({ sports : 1 });`
+    * Values sorted in alphabetical order
+    * Index contains **individual references** to **each element** in array
 
 
 
