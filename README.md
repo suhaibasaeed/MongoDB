@@ -1494,7 +1494,13 @@ db.students.aggregate([
 * Data is in a cluster
   * unit of storage
 * 3 plans
-  * 
+  * Free - 0.5GB storage
+    * basic config options
+  * Serverless - No need to manage infrastructure or scaling
+    * Priced per read/write/storage
+  * Dedicated - Multi-region cluster
+    * Can be optimised for higher CPU or memory
+    * Advanced security
 
 
 
