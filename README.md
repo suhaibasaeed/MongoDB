@@ -1475,7 +1475,26 @@ db.students.aggregate([
 * Use cases
   * Daily checks - see which devices throw specific error most times
 
+### Explore MongoDB Atlas
 
+#### Introduction
+* MongoDBs cloud offering
+  * managed service so no need to manage infrastructure
+
+#### What is MongoDB Atlas
+* Suite of Cloud DBs and data services
+* Allows us to to quickly deploy DB with GUI
+* Features
+  * Atlas Search - text-based data queries
+  * Atlas Charts - data visualisation
+  * Data Lake - large-scale analytics on data
+
+
+#### Atlas Data Storage
+* Data is in a cluster
+  * unit of storage
+* 3 plans
+  * 
 
 
 
