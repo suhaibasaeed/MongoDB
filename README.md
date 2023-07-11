@@ -1358,6 +1358,105 @@ db.students.createIndex({ clubs: -1, graduation_year: -1 });
 * **Unique indexes** - Allows enforcing of **unique values** for indexed field
   * Means insertion/updating of documents where indexed field value already matches existing index value is **restricted**
 
+### MongoDB Aggregation
+
+#### Intro
+* Allows us to do complex analytics on DB
+  * E.g. What product is making most sales on specific day
+    * Or which location orders more products
+* Built-in feature to MongoDB
+  * With some DBs you need completely separate tool to do this
+
+#### Aggregation Basics
+* Process of sifting through large chunks of data one step at a time
+  * Each step involves **filtering** or **computation**
+  * Allows us to see data in new light
+* One way to do aggregation is via **aggregation pipeline**
+  * Channel where data passes through from start to end
+  * Pipe is split up into segments called **stages**
+    * Each stage does specific operation e.g. filtering/sorting
+
+#### Getting Started with Aggregation
+* To start aggregation via pipeline we can use `.aggregation()` method
+  * E.g. `db.<collection>.aggregate()`
+  * First argument is **array** with **pipeline stages**
+  * In e.g. below we use collection called `movies`
+```
+{
+  name: "Star Wars: Clone Wars" 
+  rating: "PG"
+},
+{
+  name: "Indiana Jones and the Temple of Doom"
+  rating: "PG"
+},
+{
+  name: "Despicable Me"
+  rating: "PG"
+},
+{
+  name: "The Godfather"
+  rating: "R"
+}
+```
+  * Below we use stage called `$match` which works like `.find()` method and does filtering for us
+```
+db.movies.aggregate([
+  {
+    $match: {rating: "R"}
+  }
+])
+```
+  * Output:
+```
+{
+  name: "The Godfather",
+  rating: "R"
+}
+```
+#### Building a Multi-Stage Pipeline
+* We have collection with thousands of records of students that looks like below
+```
+{ 
+  student_id: 94204,
+  first_name: "Sun",
+  last_name: "Ko",
+  grade_level: 6,
+  test_scores: [99, 97. 96, 99],
+  average_test_score: 98.65
+}
+```
+  * We want to create new collection from this with some criteria
+    * Only have students in 6th grade with abg. test score >97
+    * sorted by `first_name` field
+    * Add new field called highest_score which has top score from test_scores array
+* Pipeline looks like below
+```
+db.students.aggregate([
+  {
+    // First stage
+    $match: {grade_level: 6, average_test_score: {$gt: 97}}
+  },
+  { 
+    // Second Stage
+    $sort: { first_name: 1} 
+  },
+  { 
+    // Third Stage
+    $addFields:  {
+      highest_score: { $max: "$test_scores" }  
+    }
+  }
+])
+```
+  * In stage 3 we use `$addFields` with an **expression**
+    * Usually used for arithmetic/comparisons
+    * In this case we use `$max` expression operator
+    * `$testScores` has $ to indicate **field path**
+      * Used to access documents fields in an expression
+      * Commonly used with aggregations
+  * First 2 stages can be done with normal methods but stage 3 is harder
+
 
 
 
