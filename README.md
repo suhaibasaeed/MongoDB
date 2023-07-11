@@ -1446,6 +1446,10 @@ db.students.aggregate([
     $addFields:  {
       highest_score: { $max: "$test_scores" }  
     }
+  },
+  {
+    // Fourth Stage
+    $out : "candidates"
   }
 ])
 ```
@@ -1456,8 +1460,20 @@ db.students.aggregate([
       * Used to access documents fields in an expression
       * Commonly used with aggregations
   * First 2 stages can be done with normal methods but stage 3 is harder
+  * Stage 4 creates new collection
+    * We could also output to a new DB instead
 
-
+#### When to Use Aggregation
+* Aggregation pipelines allow us to perform **multiple operations together**
+  * Normal CRUD operations like `.find()` just do specific things on data
+    * Good for usual things like adding product to cart in app type scenario
+  * Allows us to see bigger picture of data
+    * For things like seller dashboard which provides insights on sales/trends
+* Use aggegrations when normal CRUD methods can't do what we need to do easily
+  * Or when we need to do analysis which encompasses multiple documents
+    * Or computations on data as well as looking at changes over time
+* Use cases
+  * Daily checks - see which devices throw specific error most times
 
 
 
