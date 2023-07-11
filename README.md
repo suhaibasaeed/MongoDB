@@ -1349,7 +1349,14 @@ db.students.createIndex({ clubs: -1, graduation_year: -1 });
 * Deleting redundant indexes can increase **free disk space** and improve **write operations performance**
 
 #### Extra
-
+* **Partial Indexes** - Indexes documents that meet filter criteria
+  * Benefits are less storage used and better performance
+* **Sparse Indexes** - Only indexes documents that include specific index field
+  * Same benefits as partial indexes
+* **TTL Indexes** - single-field indexes which removes documents from collection at specific time
+  * Or after x amount of time
+* **Unique indexes** - Allows enforcing of **unique values** for indexed field
+  * Means insertion/updating of documents where indexed field value already matches existing index value is **restricted**
 
 
 
